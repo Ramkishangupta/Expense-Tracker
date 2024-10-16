@@ -5,7 +5,7 @@ import useGetUserInfo from "./useGetUserInfo";
 
 const useGetTransaction = () => {
     const [transactions, setTransactions] = useState([]);
-    const { userId } = useGetUserInfo();
+    const { userId } = useGetUserInfo(); // Ensure userId is fetched correctly
     const [transactionTotals, setTransactionTotals] = useState({
         balance: 0.0,
         income: 0.0,
@@ -13,11 +13,17 @@ const useGetTransaction = () => {
     });
 
     const getTransaction = async () => {
+        if (!userId) {
+            // Ensure userId is defined before proceeding
+            console.error("User ID is undefined. Cannot fetch transactions.");
+            return;
+        }
+
         try {
             const transactionCollectionRef = collection(db, "transactions");
             const queryTransactions = query(
                 transactionCollectionRef,
-                where("userID", "==", userId),
+                where("userID", "==", userId),  // Only run this if userId is defined
                 orderBy("createdAt")
             );
 
@@ -49,13 +55,16 @@ const useGetTransaction = () => {
 
             return () => unsubscribe();
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching transactions:", err);
         }
     };
 
     useEffect(() => {
-        getTransaction();
-    }, []);
+        if (userId) {
+            // Run the query only when userId is available
+            getTransaction();
+        }
+    }, [userId]); // Dependency array includes userId
 
     return { transactions, transactionTotals };
 };
