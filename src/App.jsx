@@ -8,8 +8,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' exact element={<Auth/>}></Route>
-          <Route path='/expense-tracker' exact element={<ExpenseTracker/>}></Route>
+          <Route path='/Expense-Tracker/' exact element={<Auth/>}></Route>
+          <Route path='/Expense-Tracker/expense-tracker' exact element={<ExpenseTracker/>}></Route>
         </Routes>
       </Router>
     </>

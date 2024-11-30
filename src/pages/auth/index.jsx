@@ -22,7 +22,7 @@ const Auth = () => {
                 isAuth: true,
             };
             localStorage.setItem("auth", JSON.stringify(authInfo));
-            navigate("/expense-tracker");
+            navigate("/Expense-Tracker/expense-tracker");
         } catch (err) {
             console.error("Sign-in failed", err);
             // Consider adding error handling, e.g., setError("Failed to sign in. Please try again.");

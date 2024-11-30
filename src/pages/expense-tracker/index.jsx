@@ -37,7 +37,7 @@ const ExpenseTracker = () => {
         try {
             await signOut(auth);
             localStorage.clear();
-            navigate("/");  // Navigate to the home or login page
+            navigate("/Expense-Tracker/");  // Navigate to the home or login page
         } catch (err) {
             console.error("Sign out failed", err);
         }

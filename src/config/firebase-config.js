@@ -12,12 +12,11 @@ const firebaseConfig = {
   apiKey: "AIzaSyBBEfxFjGjsom7EsHWpMFv3GAORwH56G-M",
   authDomain: "expense-tracker-87e7e.firebaseapp.com",
   projectId: "expense-tracker-87e7e",
-  storageBucket: "expense-tracker-87e7e.appspot.com",
+  storageBucket: "expense-tracker-87e7e.firebasestorage.app",
   messagingSenderId: "754484285739",
   appId: "1:754484285739:web:d7b45f6b0443d3a305b56e",
   measurementId: "G-05TBRF2KGN"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
