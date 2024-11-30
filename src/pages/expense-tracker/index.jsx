@@ -48,7 +48,7 @@ const ExpenseTracker = () => {
             <div className="expense-tracker">
                 <div className="container">
                     <h1>Expense Tracker</h1>
-                    <p>{userName}</p>
+                    <h3>{userName}</h3>
                     <div className="balance">
                         <h3>Current balance</h3>
                         <h2>{balance}₹</h2>
@@ -107,7 +107,7 @@ const ExpenseTracker = () => {
                     </form>
                 </div>
             </div>
-            <div>
+            <div className="exp1">
                 <h3>Transaction History</h3>
                 <ul className="transaction-history">
                     {transactions.map((transaction) => {
