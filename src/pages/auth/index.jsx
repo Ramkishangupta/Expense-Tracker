@@ -31,7 +31,7 @@ const Auth = () => {
         }
     };
     if(isAuth){
-        return <Navigate to="/expense-tracker"/>
+        return <Navigate to="/Expense-Tracker/expense-tracker"/>
     }
     return (
         <div className="login-page">
