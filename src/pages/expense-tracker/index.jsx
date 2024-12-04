@@ -149,27 +149,35 @@ const ExpenseTracker = () => {
         </div>
       </div>
       <div className="exp1">
-        <h3>Transaction History</h3>
-        <ul className="transaction-history">
-          {transactions.map((transaction) => {
-            const { description, transactionAmount, transactionType } =
-              transaction;
-            return (
-              <li
-                key={transaction.id}
-                className={`transaction-type-${transactionType}`}
-              >
-                <h4>{description}</h4>
-                <p>
-                  {transactionAmount.toFixed(2)}₹
-                  <label className={`label-${transactionType}`}>
-                    {transactionType}
-                  </label>
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+        {transactions.length > 0 ? (
+          <>
+            <h3>Transaction History</h3>
+            <ul className="transaction-history">
+              {transactions.map((transaction) => {
+                const { id, description, transactionAmount, transactionType } =
+                  transaction;
+                return (
+                  <li
+                    key={id}
+                    className={`transaction-type-${transactionType}`}
+                  >
+                    <h4>{description}</h4>
+                    <p>
+                      {transactionAmount.toFixed(2)}₹
+                      <label className={`label-${transactionType}`}>
+                        {transactionType}
+                      </label>
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        ) : (
+          <p style={{ textAlign: "center", color: "#888" }}>
+            No Transactions
+          </p>
+        )}
       </div>
     </div>
   );
