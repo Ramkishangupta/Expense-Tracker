@@ -18,6 +18,40 @@ const ExpenseTracker = () => {
   const { userName } = useGetUserInfo();
   const { balance, expenses, income } = transactionTotals;
   const navigate = useNavigate();
+  const [isListening, setIsListening] = useState(false);
+
+  // Voice-to-text functionality
+  const handleVoiceInput = () => {
+    const recognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!recognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+    const recognizer = new recognition();
+    recognizer.lang = "en-US";
+    recognizer.interimResults = false;
+
+    recognizer.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognizer.onend = () => {
+      setIsListening(false);
+    };
+
+    recognizer.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setDescription(transcript);
+    };
+
+    recognizer.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      setIsListening(false);
+    };
+
+    recognizer.start();
+  };
 
   // Add transaction submission handler
   const onSubmit = async (e) => {
@@ -66,13 +100,43 @@ const ExpenseTracker = () => {
             </div>
           </div>
           <form className="add-transaction" onSubmit={onSubmit}>
-            <input
-              type="text"
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                // padding: "1px",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                style={{
+                  flex: 1,
+                  border: "none",
+                  outline: "none",
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleVoiceInput}
+                style={{
+                  backgroundColor: isListening ? "#4CAF50" : "transparent",
+                  color: isListening ? "white" : "black",
+                  border: "none",
+                  padding: "6px 12px",
+                  cursor: "pointer",
+                  borderRadius: "5px",
+                }}
+              >
+                🎤
+              </button>
+            </div>
+
             <input
               type="number"
               placeholder="Amount"
@@ -174,9 +238,7 @@ const ExpenseTracker = () => {
             </ul>
           </>
         ) : (
-          <p style={{ textAlign: "center", color: "#888" }}>
-            No Transactions
-          </p>
+          <p style={{ textAlign: "center", color: "#888" }}>No Transactions</p>
         )}
       </div>
     </div>
